@@ -8,7 +8,7 @@ test('renders learn react link', () => {
 });
 
 // test('renders learn react link', () => {
-//   render(<App />);
+  render(<App />);
 //   const linkElement = screen.getByText(/learn react/i);
-//   expect(linkElement).toBeInTheDocument();
+  expect(linkElement).toBeInTheDocument();
 // });
