@@ -14,10 +14,18 @@ pipeline {
       }
     }
 
-   stage("build") {
+   stage("buildApp") {
       steps {
        script {
         gv.buildApp()
+       }
+      }
+    }
+
+   stage("buildImage") {
+      steps {
+       script {
+        gv.buildImage()
        }
       }
     }
@@ -36,20 +44,9 @@ pipeline {
     }
     
     stage("deploy") {
-     input {
-      message "Select the env to deploy to"
-      ok "Done"
-      parameters {
-       choice(name:'ONE', choices:['dev', 'staging', 'prod'], description:'')
-       choice(name:'TWO', choices:['dev', 'staging', 'prod'], description:'')
-      }
-     }
       steps {
        script {
-        env.ANOTHERENV = input message:"Select another env", ok:"Done", parameters: [choice(name:'ONE', choices:['dev', 'staging', 'prod'], description:'')]
         gv.deployApp()
-        echo "deploying 1 to ${ONE} and ${TWO}"
-        echo "deploying 2 to ${ANOTHERENV}"
        }
       }
     }
