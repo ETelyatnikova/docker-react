@@ -6,8 +6,8 @@ def buildApp() {
 
 def buildImage() {
   echo 'building the docker image...'
+  def myImage = docker.build("demo-app:${params.VERSION}")
   docker.withRegistry('http://192.168.1.77:8083', 'nexus-docker-repo') {
-    def myImage = docker.build("demo-app:${params.VERSION}")
     myImage.push()
   }
 }
