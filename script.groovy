@@ -6,10 +6,9 @@ def buildApp() {
 
 def buildImage() {
   echo 'building the docker image...'
-  withCredentials([usernamePassword(credentialsId: 'nexus-docker-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]){
-    sh "docker build -t 192.168.1.77:8083/demo-app:${params.VERSION}"
-    sh "echo $PASS | docker login -u $USER --password-stdin 192.168.1.77:8083"
-    sh "docker push 192.168.1.77:8083/demo-app:${params.VERSION}"
+  docker.withRegistry('192.168.1.77:8083', 'nexus-docker-repo') {
+    def myImage = docker.build("demo-app:${params.VERSION}")
+    myImage.push()
   }
 }
 
