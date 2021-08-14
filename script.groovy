@@ -6,10 +6,11 @@ def buildApp() {
 
 def buildImage() {
   echo 'building the docker image...'
-  
-  withDockerRegistry(credentialsId: 'nexus-docker-repo', url: 'https://192.168.1.77:8083') { 
-    def myImage = docker.build("192.168.1.77:8083/demo-app:${params.VERSION}")
-    myImage.push()
+  withDockerServer([uri:'tcp://docker:2376']){
+    withDockerRegistry([credentialsId: 'nexus-docker-repo', url: 'https://192.168.1.77:8083']) { 
+      def myImage = docker.build("192.168.1.77:8083/demo-app:${params.VERSION}")
+      myImage.push()
+    }
   }
 }
 
