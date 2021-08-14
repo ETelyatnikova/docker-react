@@ -10,6 +10,7 @@ def buildImage() {
     sh "docker build -t 192.168.1.77:8083/demo-app:${params.VERSION}"
     sh "echo $PASS | docker login -u $USER --password-stdin 192.168.1.77:8083"
     sh "docker push 192.168.1.77:8083/demo-app:${params.VERSION}"
+  }
 }
 
 def testApp() {
