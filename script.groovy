@@ -18,7 +18,7 @@ def buildImage() {
 
 
 def testApp() {
-  echo 'testing the app...'
+  echo 'testing the application...'
 }
 
 def deployApp() {
