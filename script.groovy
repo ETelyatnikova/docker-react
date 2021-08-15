@@ -6,7 +6,6 @@ def buildApp() {
 
 def buildImage() {
   echo 'building the docker image...'
-  // prepare docker build context
 
   withDockerServer([uri:'tcp://docker:2376']){
     withDockerRegistry([credentialsId: 'nexus-docker-repo', url: 'https://192.168.1.77:8083']) { 
