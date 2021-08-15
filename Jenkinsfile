@@ -13,44 +13,49 @@ pipeline {
        }
       }
     }
-
-   stage("buildApp") {
-     agent {
-       docker {
-        image 'node:lts-buster-slim'
-        args '-p 3000:3000'
-        reuseNode true
-       }
-      }
-
-      steps {
-       script {
-        gv.buildApp()
-       }
-      }
-    }
-
-   stage("buildImage") {
-     steps {
-       script {
-        gv.buildImage()
-       }
-      }
-    }
-    
     stage("test") {
-     when {
-      expression {
-       params.executeTests
-      }
-     }
       steps {
        script {
         gv.testApp()
        }
       }
     }
+
+   stage("buildApp") {
+    agent {
+       docker {
+        image 'node:lts-buster-slim'
+        args '-p 3000:3000'
+        reuseNode true
+       }
+    }
+
+    when {
+      expression {
+       BRANCH_NAME=='master'
+      }
+    }
     
+    steps {
+       script {
+        gv.buildApp()
+       }
+      }
+   }
+
+   stage("buildImage") {
+    when {
+      expression {
+       BRANCH_NAME=='master'
+      }
+    }
+     steps {
+       script {
+        gv.buildImage()
+       }
+      }
+    }
+        
     stage("deploy") {
       steps {
        script {
