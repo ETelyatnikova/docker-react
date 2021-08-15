@@ -1,5 +1,5 @@
 def buildApp() {
-  echo 'building the app...'
+  echo 'building the application...'
   sh 'npm install'
   sh 'npm run build' 
 }
@@ -16,7 +16,7 @@ def buildImage() {
 }
 
 def testApp() {
-  echo 'testing the app...'
+  echo 'testing the application...'
 }
 
 def deployApp() {
