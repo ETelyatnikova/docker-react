@@ -1,8 +1,8 @@
 FROM node:19-alpine AS builder
 WORKDIR /app
-COPY /my-app/package.json .
+COPY package.json .
 RUN npm install
-COPY /my-app/. .
+COPY . .
 RUN npm run build 
 
 FROM nginx
